@@ -1,0 +1,23 @@
+---- bthread_jump_fcontext Matches (26 in 3 files) ----
+context.cpp (bthread) line 133 : ".globl	bthread_jump_fcontext\n"
+context.cpp (bthread) line 134 : ".def	bthread_jump_fcontext;	.scl	2;	.type	32;	.endef\n"
+context.cpp (bthread) line 135 : ".seh_proc	bthread_jump_fcontext\n"
+context.cpp (bthread) line 136 : "bthread_jump_fcontext:\n"
+context.cpp (bthread) line 262 : ".globl bthread_jump_fcontext\n"
+context.cpp (bthread) line 264 : ".type bthread_jump_fcontext,@function\n"
+context.cpp (bthread) line 265 : "bthread_jump_fcontext:\n"
+context.cpp (bthread) line 295 : ".size bthread_jump_fcontext,.-bthread_jump_fcontext\n"
+context.cpp (bthread) line 340 : ".globl bthread_jump_fcontext\n"
+context.cpp (bthread) line 341 : ".type bthread_jump_fcontext,@function\n"
+context.cpp (bthread) line 343 : "bthread_jump_fcontext:\n"
+context.cpp (bthread) line 374 : ".size bthread_jump_fcontext,.-bthread_jump_fcontext\n"
+context.cpp (bthread) line 542 : ".globl bthread_jump_fcontext\n"
+context.cpp (bthread) line 544 : ".type bthread_jump_fcontext,%function\n"
+context.cpp (bthread) line 545 : "bthread_jump_fcontext:\n"
+context.cpp (bthread) line 576 : ".size bthread_jump_fcontext,.-bthread_jump_fcontext\n"
+context.cpp (bthread) line 619 : ".global bthread_jump_fcontext\n"
+context.cpp (bthread) line 620 : ".type   bthread_jump_fcontext, %function\n"
+context.cpp (bthread) line 621 : "bthread_jump_fcontext:\n"
+context.cpp (bthread) line 678 : ".size   bthread_jump_fcontext,.-bthread_jump_fcontext\n"
+context.h (bthread) line 78 : bthread_jump_fcontext(bthread_fcontext_t * ofc, bthread_fcontext_t nfc,
+bthread::jump_stack in stack_inl.h (bthread) :     bthread_jump_fcontext(&from->context, to->context, 0/*not skip remained*/);
