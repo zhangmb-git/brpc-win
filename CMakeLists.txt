@@ -18,6 +18,8 @@
 cmake_minimum_required(VERSION 2.8.10)
 project(brpc C CXX)
 
+#message("=======================${CMAKE_CXX_COMPILER_VERSION}")
+
 option(WITH_GLOG "With glog" OFF)
 option(WITH_MESALINK "With MesaLink" OFF)
 option(DEBUG "Print debug logs" OFF)
@@ -27,9 +29,11 @@ option(BUILD_UNIT_TESTS "Whether to build unit tests" OFF)
 option(DOWNLOAD_GTEST "Download and build a fresh copy of googletest. Requires Internet access." ON)
 
 # Enable MACOSX_RPATH. Run "cmake --help-policy CMP0042" for policy details.
-if(POLICY CMP0042)
-    cmake_policy(SET CMP0042 NEW)
-endif()
+#if(POLICY CMP0042)
+#   cmake_policy(SET CMP0042 NEW)
+#endif()
+
+cmake_policy(SET CMP0042 OLD)
 
 set(BRPC_VERSION 0.9.0)
 
@@ -47,6 +51,12 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 3.3)
         message(FATAL_ERROR "Clang is too old, please install a newer version supporting C++11")
     endif()
+	
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+    # require at least vs2017 3.3
+    if(CMAKE_CXX_COMPILER_VERSION VERSION_LESS 19.16.27045.0)
+        message(FATAL_ERROR "msvc is too old, please install a newer version supporting C++11")
+    endif()	
 else()
     message(WARNING "You are using an unsupported compiler! Compilation has only been tested with Clang and GCC.")
 endif()
@@ -72,7 +82,7 @@ configure_file(${PROJECT_SOURCE_DIR}/config.h.in ${PROJECT_SOURCE_DIR}/src/butil
 
 set(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 
-find_package(GFLAGS REQUIRED)
+find_package(GFLAGS )
 
 execute_process(
     COMMAND bash -c "grep \"namespace [_A-Za-z0-9]\\+ {\" ${GFLAGS_INCLUDE_PATH}/gflags/gflags_declare.h | head -1 | awk '{print $2}' | tr -d '\n'"
@@ -142,14 +152,14 @@ if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     endif()
 endif()
 
-find_package(Protobuf REQUIRED)
-find_package(Threads REQUIRED)
+find_package(Protobuf )
+find_package(Threads )
 
-find_path(LEVELDB_INCLUDE_PATH NAMES leveldb/db.h)
-find_library(LEVELDB_LIB NAMES leveldb)
-if ((NOT LEVELDB_INCLUDE_PATH) OR (NOT LEVELDB_LIB))
-    message(FATAL_ERROR "Fail to find leveldb")
-endif()
+#find_path(LEVELDB_INCLUDE_PATH NAMES leveldb/db.h)
+#find_library(LEVELDB_LIB NAMES leveldb)
+#if ((NOT LEVELDB_INCLUDE_PATH) OR (NOT LEVELDB_LIB))
+#    message(FATAL_ERROR "Fail to find leveldb")
+#endif()
 
 if(WITH_GLOG)
     find_path(GLOG_INCLUDE_PATH NAMES glog/logging.h)
@@ -171,10 +181,10 @@ if(WITH_MESALINK)
     include_directories(${MESALINK_INCLUDE_PATH})
 endif()
 
-find_library(PROTOC_LIB NAMES protoc)
-if(NOT PROTOC_LIB)
-    message(FATAL_ERROR "Fail to find protoc lib")
-endif()
+#find_library(PROTOC_LIB NAMES protoc)
+#if(NOT PROTOC_LIB)
+#    message(FATAL_ERROR "Fail to find protoc lib")
+#endif()
 
 if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     set(OPENSSL_ROOT_DIR
@@ -185,21 +195,21 @@ endif()
 find_package(OpenSSL)
 
 include_directories(
-        ${GFLAGS_INCLUDE_PATH}
-        ${PROTOBUF_INCLUDE_DIRS}
-        ${LEVELDB_INCLUDE_PATH}
-        ${OPENSSL_INCLUDE_DIR}
+#        ${GFLAGS_INCLUDE_PATH}
+#        ${PROTOBUF_INCLUDE_DIRS}
+#        ${LEVELDB_INCLUDE_PATH}
+#        ${OPENSSL_INCLUDE_DIR}
         )
-
+#
 set(DYNAMIC_LIB
-    ${GFLAGS_LIBRARY}
-    ${PROTOBUF_LIBRARIES}
-    ${LEVELDB_LIB}
-    ${PROTOC_LIB}
-    ${CMAKE_THREAD_LIBS_INIT}
-    ${THRIFT_LIB}
-    ${THRIFTNB_LIB}
-    ${OPENSSL_CRYPTO_LIBRARY}
+#    ${GFLAGS_LIBRARY}
+#    ${PROTOBUF_LIBRARIES}
+#    ${LEVELDB_LIB}
+#    ${PROTOC_LIB}
+#    ${CMAKE_THREAD_LIBS_INIT}
+#    ${THRIFT_LIB}
+#    ${THRIFTNB_LIB}
+#    ${OPENSSL_CRYPTO_LIBRARY}
     dl
     z)
 
